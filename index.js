@@ -24,7 +24,7 @@ app.get(url.parse(config.oauth_callback).path,function(req,res){
 });
 //Tweet
 app.get('/tweet',function(req,res) {
-    if (!req.cookies.acces_token || !req.cookies.acces_token_secret) {
+    if (!req.cookies.access_token || !req.cookies.access_token_secret) {
         return res.sendStatus(401);
     }
 
