@@ -2,10 +2,11 @@ var url = require('url');
 var express = require('express');
 var authenticator = require('./authenticator');
 var config = require('./config');
+var cookieParser = require('cookie-parser');
 var app = express();
 
 //Dodavanje cookie funkcionalnosti 
-app.use(require('cookie-parser')());
+app.use(cookieParser());
 
 //Preusmeravanje korisnika ka Twiter login stranici
 app.get('/auth/twitter',authenticator.redirectToTwitterLoginPage);

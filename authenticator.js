@@ -32,8 +32,8 @@ module.exports = {
         }
 
         //uklanjanje request-token-cokkie-ja
-        res.clearCokkie('oauth_token');
-        res.clearCokkie('oauth_token_secret');
+        res.clearCookie('oauth_token');
+        res.clearCookie('oauth_token_secret');
         
         //obavestavanje router-a da je Autentikacija uspesna
         cb();
