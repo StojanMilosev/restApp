@@ -45,7 +45,7 @@ module.exports = {
         oauth.getOAuthAccessToken(
             req.cookies.oauth_token,
             req.cookies.oauth_token_secret,
-            req.cookies.oauth_verifier,
+            req.query.oauth_verifier,
             function (error,oauth_access_token,oauth_access_token_secret,results) {
                 if (error) {
                     return cb(error);
