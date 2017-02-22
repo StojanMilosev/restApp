@@ -6,5 +6,5 @@
     "consumer_secret":"TxN9UCRVgPPoOF0Hnahiy67PGSTcPGN11tePA9MGbIYVY8K53y",
     "oauth_version":"1.0",
     "oauth_signature":"HMAC-SHA1",
-    "oauth_callback":"https://milosev-rest-app.herokuapp.com" 
+    "oauth_callback":"https://milosev-rest-app.herokuapp.com/request-token" 
 }

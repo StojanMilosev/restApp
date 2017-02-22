@@ -12,7 +12,7 @@ app.use(cookieParser());
 app.get('/auth/twitter',authenticator.redirectToTwitterLoginPage);
 
 //callback url prema kojem je korisnik preusmeren nakon autentikacije
-app.get(url.parse(config.oauth_callback).path,function(req,res){
+app.get(url.parse(config.oauth_callback).path,req.query.oauth_verifier,,function(req,res){
     authenticator.authenticate(req,res,function(err){
         if(err){
             console.log(err);
@@ -44,5 +44,5 @@ app.get('/tweet',function(req,res) {
 });
 //listening for requests
 app.listen(process.env.PORT || 8080,function () {
-    console.log("listening on port" + config.port);
+    console.log("listening on port" + process.env.PORT);
 });
