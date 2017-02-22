@@ -1,11 +1,11 @@
 {
     "port":"8080",
     "request_token_url":"https://api.twitter.com/oauth/request_token",
-    "access_token_url":"https://api.twitter.com/oauth/authorize",
-    "authorize_url":"https://api.twitter.com/oauth/request_token",
+    "access_token_url":"https://api.twitter.com/oauth/access_token",
+    "authorize_url":"https://api.twitter.com/oauth/authorize",
     "consumer_key":"6qnfs1cOxbAeE7HjuJh7HzvnF",
     "consumer_secret":"TxN9UCRVgPPoOF0Hnahiy67PGSTcPGN11tePA9MGbIYVY8K53y",
     "oauth_version":"1.0",
     "oauth_signature":"HMAC-SHA1",
-    "oauth_callback":"https://glif-restapp.herokuapp.com/" 
+    "oauth_callback":"http://2ae6471c.ngrok.io" 
 }

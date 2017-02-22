@@ -21,7 +21,7 @@ module.exports = {
             }else{
                 res.cookie('oauth_token',oauth_token,{httpOnly:true});
                 res.cookie('oauth_token_secret',oauth_token_secret,{httpOnly:true});
-                res.redirect(config.authorize_url + '?oauth_token='+oatuh_token);
+                res.redirect(config.authorize_url + '?oauth_token='+oauth_token);
             }
         });
     },

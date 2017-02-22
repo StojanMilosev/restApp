@@ -8,7 +8,7 @@ var app = express();
 app.use(require('cookie-parser')());
 
 //Preusmeravanje korisnika ka Twiter login stranici
-app.get('/auth/twitter',authenticator.redirectToTwiterLoginPage);
+app.get('/auth/twitter',authenticator.redirectToTwitterLoginPage);
 
 //callback url prema kojem je korisnik preusmeren nakon autentikacije
 app.get(url.parse(config.oauth_callback).path,function(req,res){
