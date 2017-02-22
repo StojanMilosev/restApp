@@ -48,7 +48,7 @@ module.exports = {
             req.cookies.oauth_verifier,
             function (error,oauth_access_token,oauth_access_token_secret,results) {
                 if (error) {
-                    return cn(error);
+                    return cb(error);
                 }
 
                 //povlacenje korisnikovog twiter ID-a
