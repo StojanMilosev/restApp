@@ -25,6 +25,6 @@
   "dependencies": {
     "cookie-parser": "^1.4.3",
     "express": "^4.14.1",
-    "oauth": "^0.9.14"
+    "oauth": "^0.9.15"
   }
 }

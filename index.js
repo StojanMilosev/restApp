@@ -12,7 +12,7 @@ app.use(cookieParser());
 app.get('/auth/twitter',authenticator.redirectToTwitterLoginPage);
 
 //callback url prema kojem je korisnik preusmeren nakon autentikacije
-app.get(url.parse(config.oauth_callback).path,req.query.oauth_verifier,function(req,res){
+app.get(url.parse(config.oauth_callback).path,function(req,res){
     authenticator.authenticate(req,res,function(err){
         if(err){
             console.log(err);
@@ -29,7 +29,7 @@ app.get('/tweet',function(req,res) {
     }
 
     authenticator.post('https://api.twitter.com/1.1/statuses/update.json',
-        req.cookies.acces_token, req.cookies.acces_token_secret,
+        req.cookies.access_token, req.cookies.access_token_secret,
         {
             status:"REST API Hello world"
         },
