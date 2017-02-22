@@ -13,6 +13,12 @@ var oauth = new OAuth(
 );
 
 module.exports = {
+    get:function (url,access_token,access_token_secret,cb) {
+        oauth.get.call(oauth,url,access_token,access_token_secret,cb);
+    },
+    post:function (url,access_token,access_token_secret,body,cb) {
+        oauth.get.call(oauth,url,access_token,access_token_secret,body,cb);
+    },
     redirectToTwitterLoginPage: function (req,res) {
         oauth.getOAuthRequestToken(function (error,oauth_token,oauth_token_secret) {
             if(error){
@@ -35,7 +41,40 @@ module.exports = {
         res.clearCookie('oauth_token');
         res.clearCookie('oauth_token_secret');
         
-        //obavestavanje router-a da je Autentikacija uspesna
-        cb();
+        //zamena oauth_verifier za access token
+        oauth.getOAuthAccessToken(
+            req.cookies.oauth_token,
+            req.cookies.oauth_token_secret,
+            req.cookies.oauth_verifier,
+            function (error,oauth_access_token,oauth_access_token_secret,results) {
+                if (error) {
+                    return cn(error);
+                }
+
+                //povlacenje korisnikovog twiter ID-a
+                oauth.get('https://api.twitter.com/1.1/account/verify_credentials.json',
+                    oauth_access_token,oauth_access_token_secret,
+                    function (error,data) {
+                        if (error) {
+                            console.log(error);
+                            return cb(error);
+                        }
+
+                        //parsovanje JSON odziva
+                        data = JSON.parse(data);
+
+                        //cuvanje access_token, access_token_secret i korisnikovog Twitter id-a
+                        res.cookie('access_token',oauth_access_token,{httpOnly:true});
+                        res.cookie('access_token_secret,oauth',oauth_access_token_secret,{httpOnly:true});
+                        res.cookie('twitter_id',data.id_str,{httpOnly:true});
+
+                        //obavestavanje router-a da je autentikacija uspesna
+                        cb();
+                    }
+                );
+            }
+        );
+
+        
     }
 };

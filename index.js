@@ -22,7 +22,26 @@ app.get(url.parse(config.oauth_callback).path,function(req,res){
         }
     });
 });
+//Tweet
+app.get('/tweet',function(req,res) {
+    if (!req.cookies.acces_token || !req.cookies.acces_token_secret) {
+        return res.sendStatus(401);
+    }
 
+    authenticator.post('https://api.twitter.com/1.1/statuses/update.json',
+        req.cookies.acces_token, req.cookies.acces_token_secret,
+        {
+            status:"REST API Hello world"
+        },
+        function (error,data) {
+            if (error) {
+                return res.status(400).send(error);
+            }
+
+            res.send("Uspesan tweet");
+        }
+    );
+});
 //listening for requests
 app.listen(process.env.PORT || 8080,function () {
     console.log("listening on port" + config.port);
