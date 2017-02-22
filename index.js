@@ -24,6 +24,6 @@ app.get(url.parse(config.oauth_callback).path,function(req,res){
 });
 
 //listening for requests
-app.listen(config.port,function () {
+app.listen(process.env.PORT || 8080,function () {
     console.log("listening on port" + config.port);
 });
