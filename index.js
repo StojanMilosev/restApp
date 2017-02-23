@@ -1,48 +1,14 @@
-var url = require('url');
-var express = require('express');
-var authenticator = require('./authenticator');
-var config = require('./config');
-var cookieParser = require('cookie-parser');
-var app = express();
+var cluster = require('cluster');
+var app = require('./app');
 
-//Dodavanje cookie funkcionalnosti 
-app.use(cookieParser());
+if (cluster.isMaster) {
+	// // Count the machine's CPUs
+    var cpuCount = require('os').cpus().length;
 
-//Preusmeravanje korisnika ka Twiter login stranici
-app.get('/auth/twitter',authenticator.redirectToTwitterLoginPage);
-
-//callback url prema kojem je korisnik preusmeren nakon autentikacije
-app.get(url.parse(config.oauth_callback).path,function(req,res){
-    authenticator.authenticate(req,res,function(err){
-        if(err){
-            console.log(err);
-            res.sendStatus(401);
-        }else{
-            res.send("autentikacija uspesna");
-        }
-    });
-});
-//Tweet
-app.get('/tweet',function(req,res) {
-    if (!req.cookies.access_token || !req.cookies.access_token_secret) {
-        return res.sendStatus(401);
+    // Create a worker for each CPU
+    for (var i = 0; i < cpuCount; i += 1) {
+        cluster.fork();
     }
-
-    authenticator.post('https://api.twitter.com/1.1/statuses/update.json',
-        req.cookies.access_token, req.cookies.access_token_secret,
-        {
-            status:"REST API Hello world"
-        },
-        function (error,data) {
-            if (error) {
-                return res.status(400).send(error);
-            }
-
-            res.send("Uspesan tweet");
-        }
-    );
-});
-//listening for requests
-app.listen(process.env.PORT || 8080,function () {
-    console.log("listening on port" + process.env.PORT);
-});
+} else {
+	app();
+}
